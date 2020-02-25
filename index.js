@@ -2,7 +2,7 @@ const http = require("http");
 const url = require("url");
 const fs = require("fs");
 const { Client } = require("pg");
-const hostname = "127.0.0.1";
+const hostname = "localhost";
 const port = process.env.PORT || 3000;
 
 const sqlClient = new Client({
