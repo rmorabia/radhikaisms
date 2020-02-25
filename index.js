@@ -2,7 +2,7 @@ const http = require("http");
 const url = require("url");
 const fs = require("fs");
 const { Client } = require("pg");
-const hostname = "localhost";
+const hostname = "0.0.0.0";
 const port = process.env.PORT;
 
 const sqlClient = new Client({
@@ -15,7 +15,7 @@ sqlClient.connect();
 const server = http.createServer((req, serverResponse) => {
   const requestUrl = url.parse(req.url, true);
 
-  if ((requestUrl.pathname = "/")) {
+  if ((requestUrl.pathname === "/")) {
     fs.readFile(__dirname + "/index.html", function(error, file) {
       if (error) {
         serverResponse.statusCode = 404;
@@ -27,7 +27,7 @@ const server = http.createServer((req, serverResponse) => {
     });
   }
   // GET random quote
-  else if (requestUrl.pathname == "/getQuote" && req.method === "GET") {
+  else if (requestUrl.pathname === "/getQuote" && req.method === "GET") {
     sqlClient.query(
       `SELECT * FROM quotes ORDER BY RANDOM() LIMIT 1;`,
       (err, sqlResponse) => {
@@ -44,7 +44,7 @@ const server = http.createServer((req, serverResponse) => {
     );
   }
   // POST new quote
-  else if (requestUrl.pathname == "/postQuote" && req.method === "POST") {
+  else if (requestUrl.pathname === "/postQuote" && req.method === "POST") {
     const postQuery = `INSERT INTO quotes (quote) VALUES ($1);`;
     let body = "";
 
