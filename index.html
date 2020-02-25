@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Radhikaisms</title>
+  </head>
+  <body>
+    <h1>Radhikaisms</h1>
+    <p>
+      This is an out-of-context quote generator for React. Read more about it
+      <a href="https://github.com/rmorabia/radhikaisms">here</a>.
+    </p>
+    <p>
+      Please submit out-of-context quotes by me below. No quote marks, please
+      and thank you!
+    </p>
+    <form id="submitQuote">
+      <label for="quote" style="display: block;">Submit a quote:</label>
+      <textarea
+        id="quote"
+        name="quote"
+        placeholder="how do i rt this with no one i know seeing it and murdering me"
+        style="width: 100%;"
+      ></textarea>
+      <input type="submit" value="Submit" />
+    </form>
+    <p id="message"></p>
+  </body>
+  <script>
+    const quoteForm = document.getElementById("submitQuote");
+    const quote = document.getElementById("quote").value;
+    const message = document.getElementById("message");
+    quoteForm.addEventListener("submit", e => {
+      e.preventDefault();
+      fetch("/postQuote", {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain"
+        },
+        body: quote
+      })
+        .then(response => response)
+        .then(data => {
+          console.log("Success:", data);
+          message.textContent = "Your quote has been submitted. Thank you!";
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          message.innerHTML =
+            "Sorry, your quote could not be submitted. Please try again or contact <a href='https://twitter.com/radhikamorabia'>@radhikamorabia</a> if the app isn't working.";
+        });
+    });
+  </script>
+</html>
