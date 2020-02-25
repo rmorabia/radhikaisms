@@ -15,7 +15,7 @@ sqlClient.connect();
 const server = http.createServer((req, serverResponse) => {
   const requestUrl = url.parse(req.url, true);
 
-  if ((requestUrl.pathname = "/")) {
+  if (requestUrl.pathname = "/") {
     fs.readFile(__dirname + "/index.html", function(error, file) {
       if (error) {
         serverResponse.statusCode = 404;
